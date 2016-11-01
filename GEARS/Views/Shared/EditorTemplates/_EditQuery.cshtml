@@ -1,0 +1,37 @@
+﻿@model GEARS.Models.Query
+@{ 
+    List<SelectListItem> sessions = new List<SelectListItem>();
+    sessions.Add(new SelectListItem { Text = "Fall", Value = "0" });
+    sessions.Add(new SelectListItem { Text = "Spring", Value = "1" });
+    sessions.Add(new SelectListItem { Text = "Summer", Value = "2" });
+
+    List<SelectListItem> years = new List<SelectListItem>();
+    int thisYear = DateTime.Now.Year;
+    for (int i = thisYear - 15; i < thisYear + 5; i++) {
+        years.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+    }
+
+    List<SelectListItem> types = new List<SelectListItem>();
+    types.Add(new SelectListItem { Text = "MidTerm", Value = "0" });
+    types.Add(new SelectListItem { Text = "Final", Value = "1" });
+
+    List<SelectListItem> degreeGroups = new List<SelectListItem>();
+    degreeGroups.Add(new SelectListItem { Text = "Trad", Value = "0" });
+    degreeGroups.Add(new SelectListItem { Text = "Grad", Value = "1" });
+    degreeGroups.Add(new SelectListItem { Text = "Fad", Value = "2" });
+
+    List<SelectListItem> tuitCodes = new List<SelectListItem>();
+    tuitCodes.Add(new SelectListItem { Text = "T1", Value = "0" });
+    tuitCodes.Add(new SelectListItem { Text = "T2", Value = "1" });
+    tuitCodes.Add(new SelectListItem { Text = "T3", Value = "2" });
+}
+
+@Html.DropDownListFor(m => m.Session, sessions)
+<br/>
+@Html.DropDownListFor(m => m.Year, years)
+<br/>
+@Html.DropDownListFor(m => m.Type, types)
+<br/>
+@Html.DropDownListFor(m => m.DegreeGroup, degreeGroups)
+<br/>
+@Html.DropDownListFor(m => m.TuitCode, tuitCodes)
