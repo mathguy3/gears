@@ -1,7 +1,20 @@
-﻿@model GEARS.Models.EmailsPageModel
+﻿@using GEARS.Models
+@model EmailsPageModel
 @using (Html.BeginForm("Emails", "Home", FormMethod.Post, new { Class = "query-form" }))
 {
     <div class="email-data">
-        
+        @foreach(Email email in Model.Emails)
+        {
+            <div class="email">
+                <div>@email.Professor.Name</div>
+                <div>
+                    <div>Course</div><div>Section</div><div>Title</div><div>Class Length</div>
+                    @foreach (Course course in email.Courses)
+                    {
+                        <div>@course.Number</div><div>@course.Section</div><div>@course.Title</div><div>@course.Length</div>
+                    }
+                </div>
+            </div>
+        }
     </div>
 }

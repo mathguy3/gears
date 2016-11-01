@@ -38,24 +38,28 @@ namespace GEARS.Controllers
         }
 
         [HttpPost]
-        public String SaveDates(Course course)
-        {
-            //STUB
-            DBHelper db = new DBHelper();
-            String result = db.SaveDueDates(course.Query, course.DueDates);
-            return result;
-        }
-
-        [HttpPost]
         public String Emails(QueryPageModel search)
         {
             //STUB
             DBHelper db = new DBHelper();
             List<Course> result = db.FindCoursesByQuery(search.Course.Query);
             Email em = new Email();
+            em.Professor = result.First().Professor;
             em.Courses = result;
-            String emailsPartial = PartialView("_EmailsPartial", em).RenderToString();
+            EmailsPageModel emailPageModel = new EmailsPageModel();
+            emailPageModel.Emails = new List<Email>();
+            emailPageModel.Emails.Add(em);
+            String emailsPartial = PartialView("_EmailsPartial", emailPageModel).RenderToString();
             return emailsPartial;
+        }
+
+        [HttpPost]
+        public String SaveDates(Course course)
+        {
+            //STUB
+            DBHelper db = new DBHelper();
+            String result = db.SaveDueDates(course.Query, course.DueDates);
+            return result;
         }
     }
 }

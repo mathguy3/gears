@@ -7,7 +7,7 @@ namespace GEARS.Models
 {
     public class EmailsPageModel
     {
-        List<Course> courses { get; set; }
+        public List<Email> Emails { get; set; }
 
     }
 }
