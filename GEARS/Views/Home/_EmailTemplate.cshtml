@@ -1,15 +1,16 @@
-﻿@using GEARS.Models
+﻿@using GEARS.Helpers;
+@using GEARS.Models
 @model Email
 <div class="email-content">
     <div class="email-inner-content">
         <div class="image-banner"></div>
         Good Morning @Model.Professor.Name,
         <br /><br />
-        The following is a list of courses which have grades due [Date] at [Time].
-        You can enter your grades online by going to [link MyLETU], log in and click on
+        The following is a list of courses which have grades due @ViewExtensions.FormatDate(Model.DueDates.DueDate) at @ViewExtensions.FormatTime(Model.DueDates.DueTime).
+        You can enter your grades online by going to <a href="my.letu.edu">MyLETU</a>, log in and click on
         Grade Entry on the left hand side of the screen on the Faculty and Advisors tab.
         <br /><br />
-        <b>Senior Grades Due on [Date] by [Time]</b>
+        <b>Senior Grades Due on @ViewExtensions.FormatDate(Model.DueDates.GradDueDate) by @ViewExtensions.FormatTime(Model.DueDates.GradDueTime)</b>
         <br /><br />
         Please feel free to contact the Registrar's Office with any questions about grades
         at 903-233-4370.
@@ -17,20 +18,20 @@
         Courses:
         <div>
             <div>Course</div><div>Section</div><div>Title</div><div>Class Length</div><div>Grades Due</div>
-            @foreach (Course course in Model.Courses)
+            @*foreach (Course course in Model.Courses)
             {
                 <div>@course.Number</div>
                 <div>@course.Section</div>
                 <div>@course.Title</div>
                 <div>@course.Length</div>
                 <div>@course.Query.Type</div>
-            }
+            }*@
             <br /><br /><br />
             Blessings,
             <br /><br />
             Office of the Registrar
             [link BrendaMcGhee@letu.edu]
-            [link www.letu.edu]
+            <a href="www.letu.edu">www.letu.edu</a>
             voice: 903-223-4370
             fax: 903-233-4303
             <br />
@@ -41,7 +42,7 @@
             <div class="LeTourneau-University"></div>
             <br />
             <div>
-                [link www.letu.edu]|[link Registrar]|[link Start Page]|[link MyLETU]
+                <a href="www.letu.edu">www.letu.edu</a>|[link Registrar]|[link Start Page]|<a href="my.letu.edu">MyLETU</a>
             </div>
         </div>
     </div>

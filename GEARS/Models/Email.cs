@@ -9,5 +9,6 @@ namespace GEARS.Models
     {
         public Professor Professor { get; set; }
         public List<Course> Courses { get; set; }
+        public DueDates DueDates { get; set; }
     }
 }

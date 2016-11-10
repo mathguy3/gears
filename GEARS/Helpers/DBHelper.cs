@@ -1,20 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using GEARS.Models;
+using System.Data.Odbc;
 
 namespace GEARS.Helpers
 {
     public class DBHelper
     {
+        OdbcConnection db;
+        public DBHelper()
+        {
+            string DSN = "CARSTRAIN";
+            var user = "stephend";
+            var password = "Chickens";
+            string connectionString = String.Format("Dsn={0};Uid={1};Pwd={2}", new Object[] { DSN, user, password });
+            db = new OdbcConnection(connectionString);
+            
+        }
         public List<Professor> FindProfessorsByQuery(Query query)
         {
-            //STUB
+            // Gets data for the preview page and for an individual email. Should get a list of professors that have classes that match the query, along with the course information
+            db.Open();
+            OdbcCommand command = new OdbcCommand();
+            command.CommandText = "execute procedure lu_nearest_acadcal('UNDG', today)";
+            command.Connection = db;
+
+            OdbcDataReader results = command.ExecuteReader();
+
+            while (results.Read())
+            {
+                var year = results.GetFieldValue<int>(0);
+                var session = results.GetFieldValue<string>(1);
+            }
+            db.Close();
             return new List<Professor>();
         }
         public List<Course> FindCoursesByQuery(Query query)
         {
+            // Gets data for the emails page, it should find all the courses that match the given query, along with the professor's information
             //STUB
             Course test1 = new Course();
             test1.Professor = new Professor();
@@ -43,6 +66,7 @@ namespace GEARS.Helpers
         }
         public DueDates FindDueDatesByQuery(Query query)
         {
+            // Gets data for the edit due dates page, should retrieve the specific set of due dates for the query 
             //STUB
             DueDates dueDate = new DueDates();
             dueDate.DueDate = DateTime.Now;
@@ -51,6 +75,7 @@ namespace GEARS.Helpers
         }
         public String SaveDueDates(Query query, DueDates data)
         {
+            // Sends data to be saved to the database, for the specific query
             //STUB
             return "success";
         }

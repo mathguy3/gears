@@ -1,20 +1,33 @@
 ﻿@using GEARS.Models
+@using GEARS.Helpers
 @model EmailsPageModel
-@using (Html.BeginForm("Emails", "Home", FormMethod.Post, new { Class = "query-form" }))
+@using (Html.BeginForm("Emails", "Home", FormMethod.Post, new { Class = "emails-form" }))
 {
-    <div class="email-data">
-        @foreach(Email email in Model.Emails)
-        {
-            <div class="email">
-                <div>@email.Professor.Name</div>
-                <div>
-                    <div>Course</div><div>Section</div><div>Title</div><div>Class Length</div>
-                    @foreach (Course course in email.Courses)
-                    {
-                        <div>@course.Number</div><div>@course.Section</div><div>@course.Title</div><div>@course.Length</div>
-                    }
-                </div>
+    foreach(Email email in Model.Emails)
+    {
+        <div class="email-data page">
+            <h3 class="email-prof-name">@email.Professor.Name</h3>
+            <div class="email-courses">
+                <div><div>Course</div><div>Section</div><div>Title</div><div>Class Length</div></div>
+                @foreach (Course course in email.Courses)
+                {
+                    <div><div>@course.Number</div><div>@course.Section</div><div>@course.Title</div><div>@course.Length</div></div>
+                }
             </div>
-        }
-    </div>
+            <div class="email-due-dates">@ViewExtensions.FormatDate(email.DueDates.DueDate) at @ViewExtensions.FormatTime(email.DueDates.DueTime)</div>
+        </div>
+    }
+    <button name="preview">Preview</button>
+    <button name="preview">Send All</button>
+    @Html.HiddenFor(m=> m.Emails.First().Professor.Name)
+    @Html.HiddenFor(m => m.Emails.First().DueDates.DueDate)
+    @Html.HiddenFor(m => m.Emails.First().DueDates.DueTime)
+    @Html.HiddenFor(m => m.Emails.First().DueDates.GradDueDate)
+    @Html.HiddenFor(m => m.Emails.First().DueDates.GradDueTime)
+
+    @Html.HiddenFor(m => m.Emails.First().Courses.First().Number)
+    @Html.HiddenFor(m => m.Emails.First().Courses.First().Section)
+    @Html.HiddenFor(m => m.Emails.First().Courses.First().Title)
+    @Html.HiddenFor(m => m.Emails.First().Courses.First().Length)
+    @Html.HiddenFor(m => m.Emails.First().Courses.First().Query.Type)
 }

@@ -45,6 +45,11 @@
                             }
                         });
                     break;
+                    case "preview":
+                        goGet("Preview", form.serialize(), function (response) {
+                            $(".email-preview").html(response);
+                        });
+                    break;
                 }
                 
             }

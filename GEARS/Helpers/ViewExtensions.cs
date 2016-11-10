@@ -40,5 +40,19 @@ namespace GEARS.Helpers
 
             return sb.ToString();
         }
+        public static String FormatDate(DateTime date)
+        {
+            return date.ToShortDateString();
+        }
+        public static String FormatTime(DateTime time)
+        {
+            DateTime noon = DateTime.Now.Date;
+            noon.AddHours(12);
+            if (time.Hour.CompareTo(noon.Hour) == 0)
+            {
+                return "NOON";
+            }
+            return time.ToShortTimeString();
+        }
     }
 }

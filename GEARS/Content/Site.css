@@ -53,9 +53,17 @@ body{
     align-items:center;
     flex-wrap:wrap;
 }
+h1{
+    font-size:28px;
+    flex-basis:30px;
+}
 h2{
     font-size:28px;
     flex-basis:30px;
+}
+h3{
+    font-size:18px;
+    font-weight:bolder;
 }
 .left-container{
     width:50%;
@@ -93,6 +101,22 @@ h2{
 
 .test{
     color:red;
+}
+.email-data{
+    height:auto!important;
+}
+.email-courses{
+    display:table;
+}
+.email-courses > div{
+    display:table-row;
+}
+.email-courses > div > div {
+    display:table-cell;
+    padding:5px;
+}
+.email-courses > div:first-child {
+    font-weight:bold;
 }
 
 /*footer*/

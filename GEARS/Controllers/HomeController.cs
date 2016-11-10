@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using GEARS.Models;
 using GEARS.Helpers;
+using System.Data.Odbc;
 
 namespace GEARS.Controllers
 {
@@ -24,6 +25,7 @@ namespace GEARS.Controllers
             EmailsPageModel em = new EmailsPageModel();
             fm.EmailsPageModel = em;
             fm.QueryPageModel = qm;
+            //TestConnection();
             return View(fm);
         }
 
@@ -46,6 +48,10 @@ namespace GEARS.Controllers
             Email em = new Email();
             em.Professor = result.First().Professor;
             em.Courses = result;
+            em.DueDates = new DueDates();
+            em.DueDates.DueDate = DateTime.Now;
+            em.DueDates.DueTime = DateTime.Now.Date;
+            em.DueDates.DueTime.AddHours(12);
             EmailsPageModel emailPageModel = new EmailsPageModel();
             emailPageModel.Emails = new List<Email>();
             emailPageModel.Emails.Add(em);
@@ -61,5 +67,25 @@ namespace GEARS.Controllers
             String result = db.SaveDueDates(course.Query, course.DueDates);
             return result;
         }
+
+        [HttpPost]
+        public String SendSelected()
+        {
+            //STUB
+            DBHelper db = new DBHelper();
+            String result = "";//db.SaveDueDates(course.Query, course.DueDates);
+            return result;
+        }
+
+        [HttpPost]
+        public String Preview(Email email)
+        {
+            //STUB
+            DBHelper db = new DBHelper();
+            String emailsPartial = PartialView("_EmailTemplate", email).RenderToString();
+            return emailsPartial;
+        }
+
+        
     }
 }
