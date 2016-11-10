@@ -1,14 +1,18 @@
-﻿using GEARS.Models;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
-using GEARS.Models;
+using System.Net.Mail;
 using GEARS.Helpers;
+using GEARS.Models;
 
 namespace GEARS.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        const string EMAILSENDER = "";
+        const string EMAILHOSTSERVER = "";
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -38,13 +42,6 @@ namespace GEARS.Controllers
             fm.QueryPageModel = qm;
             return View(fm);
         }
-        [HttpPost]
-        public ActionResult Index(String session, String type, String degreeGroup, 
-            String tuitCode, int year)
-        {
-            Course newCourse = new Course(session, type, degreeGroup, tuitCode, year);
-            return View(newCourse);
-        }
 
         [HttpGet]
         public ActionResult EditData()
@@ -52,16 +49,16 @@ namespace GEARS.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult EditData(String session, String type, String degreeGroup,
-            String tuitCode, int year, int dueDate, int dueTime, int gradDueDate, int gradDueTime)
+        public ActionResult EditData(Query query, DueDates dueDates)
+        {
+            Professor prof = new Professor();
+            Course course = new Course(query, dueDates, prof, "","","","");
+            return View(course);
+        }
+
         [HttpPost]
         public String Query(QueryPageModel search)
         {
-            Course newCourse = new Course(session, type, degreeGroup, tuitCode, year);
-            DueDateTime newDueDateTime = new DueDateTime(dueDate, dueTime, gradDueDate, gradDueTime);
-
-            return View(newDueDateTime);
-        }
             //STUB
             DBHelper db = new DBHelper();
             DueDates result = db.FindDueDatesByQuery(search.Course.Query);
@@ -76,20 +73,16 @@ namespace GEARS.Controllers
             DBHelper db = new DBHelper();
             List<Course> result = db.FindCoursesByQuery(search.Course.Query);
             Email em = new Email();
-            em.Professor = result.First().Professor;
+            foreach (Course course in result)
+            { 
+                em.Professor = course.Professor;
             em.Courses = result;
+            }
             EmailsPageModel emailPageModel = new EmailsPageModel();
             emailPageModel.Emails = new List<Email>();
             emailPageModel.Emails.Add(em);
             String emailsPartial = PartialView("_EmailsPartial", emailPageModel).RenderToString();
             return emailsPartial;
-        }
-        [HttpPost]
-        public ActionResult Emails(int i)
-        {
-            EmailInfo newEmailInfo = new EmailInfo();
-
-            return View(newEmailInfo);
         }
 
         [HttpGet]
@@ -97,18 +90,40 @@ namespace GEARS.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ActionResult Preview(int i)
-        [HttpPost]
+
         public String SaveDates(Course course)
         {
             //STUB
             DBHelper db = new DBHelper();
             String result = db.SaveDueDates(course.Query, course.DueDates);
             return result;
-            PreviewInfo newPreviewInfo = new PreviewInfo();
+        }
 
-            return View(newPreviewInfo);
+        public bool SendEmail(Email email)
+        {
+            MailMessage message = new MailMessage(EMAILSENDER, email.Professor.Email);
+            Attachment attachment = new Attachment("pdfdocument");  //Still needs actual document!!!
+            message.Attachments.Add(attachment);
+            message.Body = "PictureDocument";  //Still needs actual document!!!
+            SmtpClient smtp = new SmtpClient(EMAILHOSTSERVER); //Still needs actual HostServerName!!!
+            //smtp.Credentials = new NetworkCredential("login", "password");
+
+            smtp.SendCompleted += delegate (object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+            {
+                if (e.Error != null)
+                {
+                    System.Diagnostics.Trace.TraceError(e.Error.ToString());
+                }
+                MailMessage userMessage = e.UserState as MailMessage;
+                if (userMessage != null)
+                {
+                    userMessage.Dispose();
+                }
+            };
+
+            smtp.SendAsync(message, message);
+
+            return true;
         }
     }
 }

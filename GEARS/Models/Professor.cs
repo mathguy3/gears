@@ -7,8 +7,8 @@ namespace GEARS.Models
 {
     public class Professor
     {
-        public String Name { get; set; }
+        public string Name { get; set; }
         public int Fac_id { get; set; }
-        public String Email { get; set; }
+        public string Email { get; set; }
     }
 }
