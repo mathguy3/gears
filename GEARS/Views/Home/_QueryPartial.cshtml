@@ -1,0 +1,12 @@
+﻿@model GEARS.Models.QueryPageModel
+<div class="edit-query">
+    @using (Html.BeginForm("Query", "Home", FormMethod.Post, new { Class = "query-form" }))
+    {
+        @Html.EditorFor(m => m.Course.Query, "_EditQuery")
+        <br/>
+        <button name="query">Submit</button>
+    }
+</div>
+<div class="edit-partial">
+    
+</div>

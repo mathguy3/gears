@@ -173,20 +173,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DBHelper.cs" />
+    <Compile Include="Helpers\ViewExtensions.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\DueDateTime.cs" />
-    <Compile Include="Models\EmailInfo.cs" />
+    <Compile Include="Models\DueDates.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\EmailsPageModel.cs" />
+    <Compile Include="Models\FullModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Professor.cs" />
+    <Compile Include="Models\Query.cs" />
+    <Compile Include="Models\QueryPageModel.cs" />
     <Compile Include="Models\PreviewInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\reset.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -239,6 +245,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\_QueryPartial.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\_EditQuery.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\_EditDueDates.cshtml" />
+    <Content Include="Views\Home\_EmailsPartial.cshtml" />
+    <Content Include="Views\Home\_DueDatesPartial.cshtml" />
+    <Content Include="Views\Home\_EmailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

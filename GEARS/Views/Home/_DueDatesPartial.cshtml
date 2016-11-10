@@ -1,0 +1,10 @@
+﻿@model GEARS.Models.DueDates
+<div>
+    @using (Html.BeginForm("Query", "Home", FormMethod.Post, new { Class = "duedates-form" }))
+    {
+        @Html.EditorFor(m => m, "_EditDueDates")
+        <br />
+        <button name="due-dates">Send</button>
+        <div class="save-status"></div>
+    }
+</div>
