@@ -7,10 +7,10 @@ namespace GEARS.Models
 {
     public class Query
     {
-        public String Session { get; set; }
-        public String Year { get; set; }
-        public String Type { get; set; }
-        public String DegreeGroup { get; set; }
-        public String TuitCode { get; set; }
+        public string Session { get; set; }
+        public string Year { get; set; }
+        public string Type { get; set; }
+        public string DegreeGroup { get; set; }
+        public string TuitCode { get; set; }
     }
 }
